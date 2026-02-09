@@ -19,7 +19,8 @@ int main(void) {
     Cal result = inputEvaluate(input);
     double finalResult = calculate(result);
     printf("Final Result: %.6f\n", finalResult);
-    
+    delete[] result.numArr;
+    delete[] result.op;
     return 0;
 }
 
