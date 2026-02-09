@@ -11,11 +11,12 @@ typedef struct Cal {
 
 Cal inputEvaluate(char *input);
 double calculate(Cal cal);
+void drawUI();
 
 int main(void) {
-
-    char input[256];
-    scanf("%[^\n]s", input);
+    drawUI();
+    char input[256];    
+    scanf("%s", input);
     Cal result = inputEvaluate(input);
     double finalResult = calculate(result);
     printf("Final Result: %.6f\n", finalResult);
@@ -172,5 +173,40 @@ double calculate(Cal cal) {
         i--; 
     }
     
+    
     return nums[0];
+}
+
+void drawUI() {
+
+    printf("\033[H\033[2J");
+
+
+    printf("\033[38;5;141m"); 
+    printf("   ______     _       _        ______      ______   _        ____ \n");
+    printf("  / ____|    / \\     | |      / ____|    / ____|  | |      |_  _|\n");
+    printf(" | |        / _ \\    | |     | |        | |       | |       | |  \n");
+    printf(" | |____   / ___ \\   | |____ | |____    | |____   | |____  _| |_ \n");
+    printf("  \\_____| /_/   \\_\\  |______| \\_____|    \\_____|  |______| |____|\n");
+    printf("\n\033[0m");
+
+
+    printf("        \033[90m.---------------------------------------------------.\033[0m\n");
+    printf("        \033[90m|\033[0m          \033[1mDEVELOPED BY (COLLABORATORS)      \033[0m       \033[90m|\033[0m\n");
+    printf("        \033[90m|\033[0m                                                   \033[90m|\033[0m\n");
+    
+
+    printf("        \033[90m|\033[0m  • Alld4y          (Narawich Anuwong)             \033[90m|\033[0m\n");
+    printf("        \033[90m|\033[0m  • Fee             (Warapakon Phimwong)           \033[90m|\033[0m\n");
+    printf("        \033[90m|\033[0m  • KongCPERMUTL    (Danuphat Komek)               \033[90m|\033[0m\n");
+    printf("        \033[90m|\033[0m  • monthonsova     (Monthon Sova )                \033[90m|\033[0m\n");
+    printf("        \033[90m|\033[0m  • ZENZERO     (Atikan Rungrangsee )              \033[90m|\033[0m\n");
+
+    
+    printf("        \033[90m'---------------------------------------------------'\033[0m\n\n");
+
+
+    printf("\033[38;5;141m    \033[38;5;141mCtrl + C\033[0m To Exit\n");
+    printf("\033[32m  CALC >\033[0m ");
+
 }
