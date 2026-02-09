@@ -44,11 +44,11 @@ Cal inputEvaluate(char *input) {
                 }
             }
 
-            if(dotPos == -1) { // จำนวนเต็ม
+            if(dotPos == -1) { 
                 for(int i = startIntNumber; i < index; i++) {
                     number = number * 10 + (input[i] - '0');
                 }
-            } else { // ทศนิยม
+            } else {
                 for(int i = startIntNumber; i < dotPos; i++) {
                     number = number * 10 + (input[i] - '0');
                 }
@@ -113,8 +113,7 @@ Cal inputEvaluate(char *input) {
     evaluated.numCount = numberCount;
     evaluated.opCount = opIndex;
     return evaluated;
-    // delete[] numArr; 
-    // delete[] op;
+
 }
 double calculate(Cal cal) {
     double *nums = cal.numArr;
@@ -122,7 +121,7 @@ double calculate(Cal cal) {
     int numCount = cal.numCount;
     int opCount = cal.opCount;
     
-    // ขั้นตอน 1: คำนวณ *, /, % ก่อน
+
     for (int i = 0; i < opCount; i++) {
         if (ops[i] == '*' || ops[i] == '/' || ops[i] == '%') {
             double result = 0;
@@ -135,24 +134,24 @@ double calculate(Cal cal) {
                 result = (int)nums[i] % (int)nums[i + 1];
             }
             
-            // ย้ายตัวเลขลงไป
+         
             nums[i] = result;
             for (int j = i + 1; j < numCount - 1; j++) {
                 nums[j] = nums[j + 1];
             }
             
-            // ย้ายตัวดำเนินการลงไป
+      
             for (int j = i; j < opCount - 1; j++) {
                 ops[j] = ops[j + 1];
             }
             
             numCount--;
             opCount--;
-            i--; // เช็คตำแหน่งเดียวกันอีกครั้ง
+            i--; 
         }
     }
     
-    // ขั้นตอน 2: คำนวณ +, - ตามลำดับ
+ 
     for (int i = 0; i < opCount; i++) {
         if (ops[i] == '+') {
             nums[i] = nums[i] + nums[i + 1];
@@ -160,19 +159,19 @@ double calculate(Cal cal) {
             nums[i] = nums[i] - nums[i + 1];
         }
         
-        // ย้ายตัวเลขลงไป
+   
         for (int j = i + 1; j < numCount - 1; j++) {
             nums[j] = nums[j + 1];
         }
         
-        // ย้ายตัวดำเนินการลงไป
+
         for (int j = i; j < opCount - 1; j++) {
             ops[j] = ops[j + 1];
         }
         
         numCount--;
         opCount--;
-        i--; // เช็คตำแหน่งเดียวกันอีกครั้ง
+        i--; 
     }
     
     return nums[0];
