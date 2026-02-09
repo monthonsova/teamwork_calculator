@@ -20,9 +20,101 @@ int main(void) {
 }
 
 Cal inputEvaluate(char *input) {
-  
-    Cal evaluated = {0};
+    int index = 0;
+    int startIntNumber = 0;
+    int numberCount = 0;
+    double *numArr = new double[100];
+    char *op = new char[50];
+    int opIndex = 0;
+
+    while (input[index] != '\0') {
+        if(input[index] != '+' && input[index] != '-' && input[index] != '*' && input[index] != '/' && input[index] != '%' && input[index] != '.') {
+            index++;
+            continue; 
+        } 
+        
+        if(input[index] != '.') {
+            double number = 0;
+            int dotPos = -1;
+
+            for(int i = startIntNumber; i < index; i++) {
+                if(input[i] == '.') {
+                    dotPos = i;
+                    break;
+                }
+            }
+
+            if(dotPos == -1) { // จำนวนเต็ม
+                for(int i = startIntNumber; i < index; i++) {
+                    number = number * 10 + (input[i] - '0');
+                }
+            } else { // ทศนิยม
+                for(int i = startIntNumber; i < dotPos; i++) {
+                    number = number * 10 + (input[i] - '0');
+                }
+                double expo = 1;
+                for(int i = dotPos + 1; i < index; i++) {
+                    number += (input[i] - '0') * pow(10, -expo);
+                    expo++;
+                }
+            }
+
+            numArr[numberCount++] = number;
+            startIntNumber = index + 1;
+        }
+        if(input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/' || input[index] == '%') {
+            op[opIndex] = input[index];
+            opIndex++;
+        }
+        index++;
+    }
+
+    if (startIntNumber < index) {
+        double lastNumber = 0;
+        int dotPos = -1;
+
+        for (int i = startIntNumber; i < index; i++) {
+            if (input[i] == '.') {
+                dotPos = i;
+                break;
+            }
+        }
+
+        if (dotPos == -1) {
+            for (int i = startIntNumber; i < index; i++) {
+                lastNumber = lastNumber * 10 + (input[i] - '0');
+            }
+        } else {
+            for (int i = startIntNumber; i < dotPos; i++) {
+                lastNumber = lastNumber * 10 + (input[i] - '0');
+            }
+            double divisor = 10;
+            for (int i = dotPos + 1; i < index; i++) {
+                lastNumber += (input[i] - '0') / divisor;
+                divisor *= 10;
+            }
+        }
+        
+        numArr[numberCount] = lastNumber;
+        numberCount++; 
+    }
+    
+    printf("number\n");
+    for(int i = 0 ; i < numberCount ; i++) {
+        printf("Number %d : %.4f\n", i + 1, numArr[i]);
+    }
+    printf("operator\n");
+    for(int i = 0 ; i < opIndex ; i++) {
+        printf("Operator %d : %c \n", i + 1 , op[i]);
+    }
+    Cal evaluated;
+    evaluated.numArr = numArr;
+    evaluated.op = op;
+    evaluated.numCount = numberCount;
+    evaluated.opCount = opIndex;
     return evaluated;
+    // delete[] numArr; 
+    // delete[] op;
 }
 
 double calculate(Cal cal) {
