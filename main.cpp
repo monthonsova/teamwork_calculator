@@ -116,8 +116,64 @@ Cal inputEvaluate(char *input) {
     // delete[] numArr; 
     // delete[] op;
 }
-
 double calculate(Cal cal) {
+    double *nums = cal.numArr;
+    char *ops = cal.op;
+    int numCount = cal.numCount;
+    int opCount = cal.opCount;
     
-    return 0.0;
+    // ขั้นตอน 1: คำนวณ *, /, % ก่อน
+    for (int i = 0; i < opCount; i++) {
+        if (ops[i] == '*' || ops[i] == '/' || ops[i] == '%') {
+            double result = 0;
+            
+            if (ops[i] == '*') {
+                result = nums[i] * nums[i + 1];
+            } else if (ops[i] == '/') {
+                result = nums[i] / nums[i + 1];
+            } else if (ops[i] == '%') {
+                result = (int)nums[i] % (int)nums[i + 1];
+            }
+            
+            // ย้ายตัวเลขลงไป
+            nums[i] = result;
+            for (int j = i + 1; j < numCount - 1; j++) {
+                nums[j] = nums[j + 1];
+            }
+            
+            // ย้ายตัวดำเนินการลงไป
+            for (int j = i; j < opCount - 1; j++) {
+                ops[j] = ops[j + 1];
+            }
+            
+            numCount--;
+            opCount--;
+            i--; // เช็คตำแหน่งเดียวกันอีกครั้ง
+        }
+    }
+    
+    // ขั้นตอน 2: คำนวณ +, - ตามลำดับ
+    for (int i = 0; i < opCount; i++) {
+        if (ops[i] == '+') {
+            nums[i] = nums[i] + nums[i + 1];
+        } else if (ops[i] == '-') {
+            nums[i] = nums[i] - nums[i + 1];
+        }
+        
+        // ย้ายตัวเลขลงไป
+        for (int j = i + 1; j < numCount - 1; j++) {
+            nums[j] = nums[j + 1];
+        }
+        
+        // ย้ายตัวดำเนินการลงไป
+        for (int j = i; j < opCount - 1; j++) {
+            ops[j] = ops[j + 1];
+        }
+        
+        numCount--;
+        opCount--;
+        i--; // เช็คตำแหน่งเดียวกันอีกครั้ง
+    }
+    
+    return nums[0];
 }
