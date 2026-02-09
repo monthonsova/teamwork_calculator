@@ -14,7 +14,10 @@ double calculate(Cal cal);
 
 int main(void) {
 
-    printf("test");
+    char input[256];
+    Cal result = inputEvaluate(input);
+    double finalResult = calculate(result);
+    printf("Final Result: %.6f\n", finalResult);
     
     return 0;
 }
