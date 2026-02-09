@@ -15,6 +15,7 @@ double calculate(Cal cal);
 int main(void) {
 
     char input[256];
+    scanf("%[^\n]s", input);
     Cal result = inputEvaluate(input);
     double finalResult = calculate(result);
     printf("Final Result: %.6f\n", finalResult);
@@ -102,14 +103,7 @@ Cal inputEvaluate(char *input) {
         numberCount++; 
     }
     
-    printf("number\n");
-    for(int i = 0 ; i < numberCount ; i++) {
-        printf("Number %d : %.4f\n", i + 1, numArr[i]);
-    }
-    printf("operator\n");
-    for(int i = 0 ; i < opIndex ; i++) {
-        printf("Operator %d : %c \n", i + 1 , op[i]);
-    }
+
     Cal evaluated;
     evaluated.numArr = numArr;
     evaluated.op = op;
